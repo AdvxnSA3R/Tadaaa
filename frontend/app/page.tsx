@@ -1,6 +1,5 @@
 'use client';
 import { Center, Container, Text } from "@mantine/core";
-import { IconRocket } from "@tabler/icons-react";
 import {TextInput} from './input';
 import { TodoList } from "./list";
 
