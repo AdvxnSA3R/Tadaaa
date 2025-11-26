@@ -1,4 +1,4 @@
-
+'use client';
 import { Input } from '@mantine/core';
 
 export function TextInput() {

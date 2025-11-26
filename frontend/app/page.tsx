@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from "react";
+
 import { Center, Container, Text } from "@mantine/core";
 import { IconRocket } from "@tabler/icons-react";
 import {TextInput} from './input';
