@@ -35,7 +35,7 @@ interface ItemProps {
 
 function SortableItem({ item }: ItemProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id: item.symbol,
+    id: item.key,
   });
 
   const style: React.CSSProperties = {
@@ -74,16 +74,16 @@ export function TodoList() {
     if (!over || active.id === over.id) {
       return;
     }
-    const oldIndex = state.findIndex((i) => i.symbol === active.id);
-    const newIndex = state.findIndex((i) => i.symbol === over.id);
+    const oldIndex = state.findIndex((i) => i.key === active.id);
+    const newIndex = state.findIndex((i) => i.key === over.id);
     handlers.setState(arrayMove(state, oldIndex, newIndex));
   };
 
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <SortableContext items={state.map((i) => i.symbol)} strategy={verticalListSortingStrategy}>
+      <SortableContext items={state.map((i) => i.key)} strategy={verticalListSortingStrategy}>
         {state.map((item, index) => (
-          <SortableItem key={item.symbol} item={item} index={index} />
+          <SortableItem key={item.key} item={item} index={index} />
         ))}
       </SortableContext>
     </DndContext>
