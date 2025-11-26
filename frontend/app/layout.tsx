@@ -27,6 +27,10 @@ const theme = createTheme({
   headings: {
     fontFamily: `${geistSans.style.fontFamily}, ${DEFAULT_THEME.fontFamily}`,
   },
+  // Apply a dark blue background color to the body
+  colors: {
+    darkBlue: ['#222831', '#222831', '#222831', '#222831', '#222831', '#222831', '#222831', '#222831', '#222831', '#222831'],
+  }
 });
 
 export default function RootLayout({
@@ -41,7 +45,9 @@ export default function RootLayout({
       </head>
       <body>
         <MantineProvider theme={theme} defaultColorScheme='light' >
-          {children}
+          <div style={{ backgroundColor: theme.colors.darkBlue[0], minHeight: '100vh' }}>
+            {children}
+          </div>
         </MantineProvider>
       </body>
     </html>

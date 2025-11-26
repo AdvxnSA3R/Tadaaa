@@ -16,24 +16,23 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import cx from 'clsx';
-import { Text } from '@mantine/core';
+import { Text, Button, Divider } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import classes from './DndList.module.css';
+import { useEffect } from 'react';
 
-const data = [
-  { name: 'Carbon', key: 'C' },
-  { name: 'Nitrogen', key: 'N'},
-  { name: 'Yttrium', key: 'Y'},
-  { name: 'Barium', key: 'B'},
-  { name: 'Cerium', key: 'Cr'},
-];
- console.log(data);
-interface ItemProps {
-  item: (typeof data)[number];
-  index: number; // kept if needed elsewhere
+interface Task {
+  name: string;
+  key: string;
 }
 
-function SortableItem({ item }: ItemProps) {
+interface ItemProps {
+  item: Task;
+  index: number; // kept if needed elsewhere
+  onDeleteTask: (key: string) => void;
+}
+
+function SortableItem({ item, onDeleteTask }: ItemProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: item.key,
   });
@@ -52,17 +51,26 @@ function SortableItem({ item }: ItemProps) {
       {...listeners}
     >
       
-      <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Button size="xs" variant="outline" color="red" onClick={() => onDeleteTask(item.key)}>Delete</Button>
+        <Divider orientation="vertical" mx="xs" />
         <Text>{item.name}</Text>
-        
-        
       </div>
     </div>
   );
 }
 
-export function TodoList() {
-  const [state, handlers] = useListState(data);
+interface TodoListProps {
+  tasks: Task[];
+  onDeleteTask: (key: string) => void;
+}
+
+export function TodoList({ tasks, onDeleteTask }: TodoListProps) {
+  const [state, handlers] = useListState(tasks);
+
+  useEffect(() => {
+    handlers.setState(tasks);
+  }, [tasks, handlers]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -83,7 +91,7 @@ export function TodoList() {
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext items={state.map((i) => i.key)} strategy={verticalListSortingStrategy}>
         {state.map((item, index) => (
-          <SortableItem key={item.key} item={item} index={index} />
+          <SortableItem key={item.key} item={item} index={index} onDeleteTask={onDeleteTask} />
         ))}
       </SortableContext>
     </DndContext>
