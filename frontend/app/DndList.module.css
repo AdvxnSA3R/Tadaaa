@@ -1,15 +1,27 @@
 .item {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  border-radius: var(--mantine-radius-md);
-  border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
-  padding: var(--mantine-spacing-sm) var(--mantine-spacing-lg);
-  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-5));
+  border-radius: var(--mantine-radius-lg);
+  border: 1px solid transparent;
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
+  background-color: transparent;
   margin-bottom: var(--mantine-spacing-sm);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.item:hover {
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
 }
 
 .itemDragging {
-  box-shadow: var(--mantine-shadow-sm);
+  box-shadow: var(--mantine-shadow-md);
+  border-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-7));
+}
+
+.itemPinned {
+  background-color: light-dark(var(--mantine-color-deep-blue-0), var(--mantine-color-dark-8));
+  border-color: light-dark(var(--mantine-color-deep-blue-1), var(--mantine-color-dark-7));
 }
 
 .symbol {
