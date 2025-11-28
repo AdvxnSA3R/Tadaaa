@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: 'export',
-  basePath: '/tadaaa',
+  basePath: '/Tadaaa',
 
   /* config options here */
   reactCompiler: true,
