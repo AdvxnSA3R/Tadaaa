@@ -4,28 +4,39 @@ import { Center, Container, Text, useMantineColorScheme, UnstyledButton, Paper, 
 import { IconSun, IconMoon, IconPalette } from "@tabler/icons-react";
 import { InputWithButton } from './input';
 import { TodoList } from './list';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useThemeContext } from './ThemeContext';
 
 export default function Home() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const { cyclePalette } = useThemeContext();
   const [todos, handlers] = useListState([]);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    const storedTodos = localStorage.getItem('todos');
-    if (storedTodos) {
-      handlers.setState(JSON.parse(storedTodos));
-    }
+    setIsClient(true);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]);
+    if (isClient) {
+      const storedTodos = localStorage.getItem('todos');
+      if (storedTodos) {
+        handlers.setState(JSON.parse(storedTodos));
+      }
+    }
+  }, [isClient]);
+
+  useEffect(() => {
+    if (isClient) {
+      localStorage.setItem('todos', JSON.stringify(todos));
+    }
+  }, [todos, isClient]);
 
   const togglePin = (index: number) => {
-    const pinnedCount = todos.filter((todo) => todo.pinned).length;
-    if (pinnedCount < 3 || todos[index].pinned) {
+    const pinnedCount = todos.filter((todo: any) => todo.pinned).length;
+    if (pinnedCount < 3 || (todos as any)[index].pinned) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       handlers.setItem(index, { ...todos[index], pinned: !todos[index].pinned });
     }
   };
@@ -47,7 +58,7 @@ export default function Home() {
           </Group>
         </Group>
         <InputWithButton handlers={handlers} />
-        <TodoList todos={todos} handlers={handlers} togglePin={togglePin} />
+        {isClient && <TodoList todos={todos} handlers={handlers} togglePin={togglePin} />}
       </Paper>
     </Container>
   );

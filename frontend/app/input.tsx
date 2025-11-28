@@ -51,6 +51,8 @@ export function InputWithButton({ handlers }: { handlers: any }) {
           radius="md"
           placeholder="Due date"
           value={date}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
           onChange={setDate}
         />
       </Collapse>

@@ -7,6 +7,8 @@ export const createAppTheme = (palette: typeof palettes[0]) => createTheme({
   headings: {
     fontFamily: 'Roboto, sans-serif',
   },
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   colors: palette.colors,
   primaryColor: palette.primaryColor,
   radius: {
