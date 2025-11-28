@@ -2,12 +2,16 @@
 #
 # To get started with Next.js see: https://nextjs.org/docs/getting-started
 #
+defaults:
+  run:
+    working-directory: ./frontend
+
 name: Deploy Next.js site to Pages
 
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: [""]
+    branches: ["noapi"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
