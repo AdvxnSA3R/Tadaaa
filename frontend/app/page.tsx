@@ -16,7 +16,7 @@ export default function Home() {
     // Update state by appending the new task to the existing list
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
-
+  
   // Function to delete a task by its key
   const handleDeleteTask = (key: string) => {
     // Filter out the task with the matching key
