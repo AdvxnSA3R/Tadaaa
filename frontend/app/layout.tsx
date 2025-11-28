@@ -45,7 +45,7 @@ export default function RootLayout({
       </head>
       <body>
         <MantineProvider theme={theme} defaultColorScheme='light' >
-          <div style={{ backgroundColor: theme.colors.darkBlue[0], minHeight: '100vh' }}>
+          <div style={{ backgroundColor: theme.colors?.darkBlue?.[0], minHeight: '100vh' }}>
             {children}
           </div>
         </MantineProvider>
